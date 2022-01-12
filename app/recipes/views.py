@@ -38,6 +38,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated, ]
 
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.RecipeDetailSerializer
+        return self.serializer_class
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
